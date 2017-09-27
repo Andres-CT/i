@@ -60,12 +60,13 @@ def gameFinished(player_number):
 #Function for printing the game board
 def printGame():
     global board, width, height
-    for x in range(height-1,-1, -1):
+    print "-----------------------------"
+    for x in range(height-1,-1,-1):
         for y in range(0,width):
             #if(board[x][y] == 0):
              #   print (" ")
-            print board[y][x],
-        print "\n"
+            print "|",board[y][x],
+        print "|\n----+---+---+---+---+---+----"
     print "\n"
             
 def checkAnyT(player_number):
@@ -133,10 +134,64 @@ def checkWinTopRight(col, row, player_number):
     return False
 
 def intelligentFunction1(turn, board):
-    return random.randint(0,6)
+    i=0
+    if (turn==1):
+        for x in range(height-1,-1,-1):
+            for y in range(0,width):
+                if(board[y][x]!=turn and board[y][x]!=0 and board[y][x+1]==0):
+                    i=y
+                    for r in range(0,height-3):
+                        for c in range(0,width-3):
+                            if(board[r][c]==1
+                            and board[r+1][c]==1
+                            and board[r+2][c]==1
+                            and board[r+1][c+1]==0):
+                                i=r+1
+    else:
+        start=1
+        for u in range(0,width):
+            if(board[u][0]!=0):
+                start=0
+                u=width
+        if(start==1):
+            i=random.randint(8,9)
+            if(i==8):
+                i=0
+            else:
+                i=6
+        else:
+            #i=random.randint(0,6)
+            #while (board[i][5]!=0):
+                #i=random.randint(0,6)
+            for x in range(0,height-1):
+                for y in range(0,width):
+                    if(board[y][x]!=turn and board[y][x]!=0 and board[y][x+1]==0):
+                        i=y
+            if(board[i][height-1]!=0):
+                i=random.randint(0,6)
+                while (board[i][5]!=0):
+                    i=random.randint(0,6)
+    return i
 
 def intelligentFunction2(turn, board):
-    return random.randint(0,6)
+    i=random.randint(0,6)
+    while (board[i][5]!=0):
+        i=random.randint(0,6)
+    return i
+
+class ConectaT:
+    def __init__(self, IntraBoard, depth):
+        self.IntraBoard = IntraBoard
+        self.depth = depth
+        if(depth<=1):
+            self.p1 = ConectaT(IntraBoard,depth+1)
+            self.p2 = ConectaT(IntraBoard,depth+1)
+            self.p3 = ConectaT(IntraBoard,depth+1)
+            self.p4 = ConectaT(IntraBoard,depth+1)
+            self.p5 = ConectaT(IntraBoard,depth+1)
+            self.p6 = ConectaT(IntraBoard,depth+1)
+            self.p7 = ConectaT(IntraBoard,depth+1)
+Q=ConectaT(board,0)
 
 def main():
     global board
@@ -148,9 +203,9 @@ def main():
             turn = 2
         else: turn = 1
         if(turn == 1):
-            row = intelligentFunction1(turn, board)
-        if(turn == 2):
             row = intelligentFunction2(turn, board)
+        if(turn == 2):
+            row = intelligentFunction1(turn, board)
         if (place(row,turn) == -1):
             loser = turn
             break;
@@ -161,7 +216,6 @@ def main():
     else: 
         printGame()
         print "The winner is ", turn
-        
     
 if __name__ == '__main__':
    main()
