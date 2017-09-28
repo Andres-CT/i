@@ -143,8 +143,8 @@ def intelligentFunction1(turn, board):
             for y in range(0,width):
                 if(board[x][y]!=turn and board[x][y]!=0 and board[x+1][y]==0):
                     i=y
-                    for r in range(0,height-3):
-                        for c in range(0,width-3):
+                    for r in range(0,height-2):
+                        for c in range(0,width-2):
                             if(board[r][c]==turn
                             and board[r][c+1]==turn
                             and board[r][c+2]==turn
@@ -170,8 +170,8 @@ def intelligentFunction1(turn, board):
                 for y in range(0,width):
                     if(board[x][y]!=turn and board[x][y]!=0 and board[x+1][y]==0):
                         i=y
-                        for r in range(0,height-3):
-                            for c in range(0,width-3):
+                        for r in range(0,height-2):
+                            for c in range(0,width-2):
                                 if(board[r][c]==turn
                                 and board[r][c+1]==turn
                                 and board[r][c+2]==turn
@@ -202,9 +202,10 @@ def placeChange(List,n,turn):
             return 0
 
 class ConectaT:
-    def __init__(self, intraBoard, depth, turn):
+    def __init__(self, intraBoard, depth, turn, columnaPtirar):
         self.IntraBoard = intraBoard
         self.depth = depth
+        self.Tiro = columnaPtirar
         if(depth==0):
             turn=1+(turn%2)
         """print ("-----------------------------")
@@ -214,14 +215,32 @@ class ConectaT:
             print ("|\n----+---+---+---+---+---+----")
         print ("\n")"""
         if(depth<=2):#-1 of desired level
-            self.p1 = ConectaT(placeChange(intraBoard, 0, 1+(turn%2)),depth+1,1+(turn%2))
-            self.p2 = ConectaT(placeChange(intraBoard, 1, 1+(turn%2)),depth+1,1+(turn%2))
-            self.p3 = ConectaT(placeChange(intraBoard, 2, 1+(turn%2)),depth+1,1+(turn%2))
-            self.p4 = ConectaT(placeChange(intraBoard, 3, 1+(turn%2)),depth+1,1+(turn%2))
-            self.p5 = ConectaT(placeChange(intraBoard, 4, 1+(turn%2)),depth+1,1+(turn%2))
-            self.p6 = ConectaT(placeChange(intraBoard, 5, 1+(turn%2)),depth+1,1+(turn%2))
-            self.p7 = ConectaT(placeChange(intraBoard, 6, 1+(turn%2)),depth+1,1+(turn%2))
-Q=ConectaT(board,0,2)
+            self.p1 = ConectaT(placeChange(intraBoard, 0, 1+(turn%2)),depth+1,1+(turn%2),0)
+            self.p2 = ConectaT(placeChange(intraBoard, 1, 1+(turn%2)),depth+1,1+(turn%2),1)
+            self.p3 = ConectaT(placeChange(intraBoard, 2, 1+(turn%2)),depth+1,1+(turn%2),2)
+            self.p4 = ConectaT(placeChange(intraBoard, 3, 1+(turn%2)),depth+1,1+(turn%2),3)
+            self.p5 = ConectaT(placeChange(intraBoard, 4, 1+(turn%2)),depth+1,1+(turn%2),4)
+            self.p6 = ConectaT(placeChange(intraBoard, 5, 1+(turn%2)),depth+1,1+(turn%2),5)
+            self.p7 = ConectaT(placeChange(intraBoard, 6, 1+(turn%2)),depth+1,1+(turn%2),6)
+Q=ConectaT(board,0,2,0)
+
+def Evaluate(BOARD,playerN):
+    Score=0
+    if(checkAnyT(playerN)):
+        Score=10000
+    if(checkAnyT(1+(playerN%2))):
+        Score=-10000
+    if(Score!=10000 and Score!=-10000):
+        for x in range(0,height-1):
+            for y in range(0,width-2):
+                if(board[x][y]==playerN and board[x][y+2]==playerN and board[x][y+1]!=0
+                   and board[x+1][y+1]==playerN and
+                   ((board[x+1][y]!=0 and board[x+1][y]==0) 
+                   or (board[x+1][y+2]!=0 and board[x+1][y+2]==0))):
+                    Score+=100
+    return Score
+def MejorTiro(object):
+    
 
 def main():
     global board
