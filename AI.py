@@ -290,22 +290,26 @@ def checkL4(row,col,turn):
     return False
 
 def main():
-    print (MejorTiro(Q))
-    """
     global board
-    turn = 1
-    loser = 0
-    while (gameFinished(turn) == 0):
-        #printGame()
-        if (turn == 1):
-            turn = 2
+    print (MejorTiro(Q))
+    Kee="z"
+    while(Kee!="a" and Kee!="b"):
+        print("¿Quién va a comenzar el juego?\n\ta)Un humano\n\tb)El programa")
+        Kee=input()
+        if(Kee=="a" or Kee=="b"):
+            if(Kee=="a"):
+                turn=2
+            else:
+                turn=1
         else:
-            turn = 1
+            print("Caracter inválido")
+    loser = 0
+    while (gameFinished(turn)==0):
+        printGame()
+        turn=1+(turn%2)
         if (turn == 1):
-            #column = int(input("Columna para tirar: "))
-            column = intelligentFunction1(turn, board)
+            column = int(input("Columna para tirar: "))
         if (turn == 2):
-            #column = int(input("Columna para tirar: "))
             column = intelligentFunction1(turn, board)
         if (place(column, turn) == -1):
             loser = turn
