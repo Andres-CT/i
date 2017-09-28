@@ -253,10 +253,10 @@ def MejorTiro(object):
     return ElMejorTiro
 
 def checkAnySquare(BOARD, column, row, playerN):
-   if(board[row][colum+1] == player_number and board[row+1][colum] == player_number and board[row+1][colum+1] == player_number):
-        return true
+   if(board[row][column+1] == playerN and board[row+1][column] == playerN and board[row+1][column+1] == playerN):
+        return True
 
-   return false
+   return False
 
 def checkL1(BOARD,row,col,turn):
     global  width, height
