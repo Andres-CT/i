@@ -170,10 +170,11 @@ def intelligentFunction1(turn, board):
                 for y in range(0,width):
                     if(board[x][y]!=turn and board[x][y]!=0 and board[x+1][y]==0):
                         i=y
-            if(board[height-1][i]!=0):
-                i=random.randint(0,6)
-                while (board[5][i]!=0):
-                    i=random.randint(0,6)
+            if(board[5][i]!=0):
+               print ("QQ")
+               i=random.randint(0,6)
+               while (board[5][i]!=0):
+                   i=random.randint(0,6)
     return i
 
 def intelligentFunction2(turn, board):
@@ -227,6 +228,7 @@ def main():
         if (turn == 1):
             column = intelligentFunction2(turn, board)
         if (turn == 2):
+            #column =int(input()) 
             column = intelligentFunction1(turn, board)
         if (place(column, turn) == -1):
             loser = turn
