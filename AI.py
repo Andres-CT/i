@@ -205,7 +205,9 @@ class ConectaT:
     def __init__(self, intraBoard, depth, turn, columnaPtirar):
         self.IntraBoard = intraBoard
         self.depth = depth
-        self.Tiro = columnaPtirar
+        self.Turn = turn
+        self.Pointers=[]
+        self.CPT=columnaPtirar
         if(depth==0):
             turn=1+(turn%2)
         """print ("-----------------------------")
@@ -215,17 +217,15 @@ class ConectaT:
             print ("|\n----+---+---+---+---+---+----")
         print ("\n")"""
         if(depth<=2):#-1 of desired level
-            self.p1 = ConectaT(placeChange(intraBoard, 0, 1+(turn%2)),depth+1,1+(turn%2),0)
-            self.p2 = ConectaT(placeChange(intraBoard, 1, 1+(turn%2)),depth+1,1+(turn%2),1)
-            self.p3 = ConectaT(placeChange(intraBoard, 2, 1+(turn%2)),depth+1,1+(turn%2),2)
-            self.p4 = ConectaT(placeChange(intraBoard, 3, 1+(turn%2)),depth+1,1+(turn%2),3)
-            self.p5 = ConectaT(placeChange(intraBoard, 4, 1+(turn%2)),depth+1,1+(turn%2),4)
-            self.p6 = ConectaT(placeChange(intraBoard, 5, 1+(turn%2)),depth+1,1+(turn%2),5)
-            self.p7 = ConectaT(placeChange(intraBoard, 6, 1+(turn%2)),depth+1,1+(turn%2),6)
-Q=ConectaT(board,0,2,0)
+            for k in range(0,7):
+                self.Pointers.append(ConectaT(placeChange(intraBoard, k, 1+(turn%2)),depth+1,1+(turn%2),k))
+Q=ConectaT(board,0,2,random.randint(0,6))
+#print (Q.Pointers[6].Pointers[6].Pointers[6].IntraBoard)
 
 def Evaluate(BOARD,playerN):
-    Score=0
+    Score=3
+    if(BOARD[0][3]==1 and BOARD[1][3]==2):
+        Score=165
     if(checkAnyT(playerN)):
         Score=10000
     if(checkAnyT(1+(playerN%2))):
@@ -240,21 +240,33 @@ def Evaluate(BOARD,playerN):
                     Score+=100
     return Score
 def MejorTiro(object):
-    
+    MejorScore=0
+    Candidato=0
+    ElMejorTiro=0
+    for ii in range(0,7):
+        for jj in range(0,7):
+            for hh in range(0,7):
+                Candidato=(Evaluate(object.Pointers[ii].Pointers[jj].Pointers[hh].IntraBoard,object.Pointers[ii].Pointers[jj].Pointers[hh].Turn))
+                if(Candidato>MejorScore):
+                    ElMejorTiro=(object.Pointers[ii].Pointers[jj].Pointers[hh].CPT)
+                    MejorScore=Candidato
+    return ElMejorTiro
 
 def main():
+    print (MejorTiro(Q))
+    """
     global board
     turn = 1
     loser = 0
     while (gameFinished(turn) == 0):
-        printGame()
+        #printGame()
         if (turn == 1):
             turn = 2
         else:
             turn = 1
         if (turn == 1):
-            column = int(input("Columna para tirar: "))
-            #column = intelligentFunction1(turn, board)
+            #column = int(input("Columna para tirar: "))
+            column = intelligentFunction1(turn, board)
         if (turn == 2):
             #column = int(input("Columna para tirar: "))
             column = intelligentFunction1(turn, board)
@@ -268,6 +280,8 @@ def main():
     else:
         printGame()
         print ("The winner is ", turn)
+    
+    """
 
 if __name__ == '__main__':
     main()
