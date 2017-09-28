@@ -252,12 +252,42 @@ def MejorTiro(object):
                     MejorScore=Candidato
     return ElMejorTiro
 
+
  def checkAnySquare(BOARD, column, row, playerN):
 
    if(board[row][colum+1] == player_number and board[row+1][colum] == player_number and board[row+1][colum+1] == player_number):
         return true
 
    return false
+
+def checkL1(row,col,turn):
+    global board, width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if ((board[row][col] and board[row+1][col] and board[row+1][col-1])==turn and board[row][col-1]!=0):
+        return True
+    return False
+
+
+def checkL2(row,col,turn):
+    global board, width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if ((board[row][col] and board[row+1][col] and board[row+1][col+1])==turn and board[row][col+1]!=0):
+        return True
+    return False
+
+def checkL3(row,col,turn):
+    global board, width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if ((board[row][col] and board[row][col+1] and board[row+1][col+1])==turn and board[row+1][col]!=0):
+        return True
+    return False
+
+def checkL4(row,col,turn):
+    global board, width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if ((board[row][col] and board[row][col-1] and board[row+1][col-1])==turn and board[row+1][col]!=0):
+        return True
+    return False
 
 def main():
     print (MejorTiro(Q))
