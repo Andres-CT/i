@@ -189,6 +189,7 @@ def intelligentFunction2(turn, board):
         i=random.randint(0,6)
     return i
 
+
 def placeChange(List,n,turn):
     change=0
     IntraBoardx=copy.deepcopy(List)
@@ -285,6 +286,67 @@ def checkL4(BOARD, row,col,turn):
     if (col + 1 == width or row == 0 or row + 1 == width): return False
     if ((BOARD[row][col] and BOARD[row][col-1] and BOARD[row+1][col-1])==turn and BOARD[row+1][col]!=0):
         return True
+    return False
+
+def IntraCheckAnyT(BOARD, player_number):
+    for r in range(0, 6):
+        for c in range(0, 7):
+            if (BOARD[r][c] == player_number):
+                if (checkWinBelow(r, c, player_number)
+                    or checkWinAbove(r, c, player_number)
+                    or checkLeft(r, c, player_number)
+                    or checkRight(r, c, player_number)
+                    or checkWinBottomRight(r, c, player_number)
+                    or checkWinBottomLeft(r, c, player_number)
+                    or checkWinTopLeft(r, c, player_number)
+                    or checkWinTopRight(r, c, player_number)):
+                    return True
+    return False
+
+def IntraCheckWinBelow(BOARD,row, col, player_number):
+    if (col + 1 == 7 or row == 0 or row + 1 == 7): return False
+    if (BOARD[row - 1][col + 1] == player_number and BOARD[row][col + 1] == player_number and BOARD[row + 1][
+            col + 1] == player_number): return True
+    return False
+
+def IntraCheckWinAbove(BOARD,row, col, player_number):
+    if (col == 0 or row == 0 or row + 1 == 6): return False
+    if (BOARD[row - 1][col - 1] == player_number and BOARD[row][col - 1] == player_number and BOARD[row + 1][
+            col - 1] == player_number): return True
+    return False
+
+def IntraCheckLeft(BOARD,row, col, player_number):
+    if (row + 1 >= 6 or col + 1 >= 7 or col - 1 < 0): return False
+    if (BOARD[row + 1][col - 1] == BOARD[row + 1][col] == BOARD[row + 1][col + 1] == player_number): return True
+    return False
+
+def IntraCheckRight(BOARD,row, col, player_number):
+    if (row - 1 < 0 or col + 1 >= 7 or col - 1 < 0): return False
+    if (BOARD[row - 1][col - 1] == BOARD[row - 1][col] == BOARD[row - 1][col + 1] == player_number): return True
+    return False
+
+def IntraCheckWinBottomRight(BOARD,row, col, player_number):
+    if (row - 2 < 0 or col + 2 >= 7): return False
+    if (BOARD[row - 2][col] == player_number and BOARD[row - 1][col + 1] == player_number and BOARD[row][
+            col + 2] == player_number): return True
+    return False
+
+def IntraCheckWinBottomLeft(BOARD,row, col, player_number):
+    if (row + 2 >= 6 or col - 2 < 0): return False
+    if (BOARD[row + 2][col] == player_number and BOARD[row + 1][col - 1] == player_number and BOARD[row][
+            col - 2] == player_number): return True
+    return False
+
+def IntraCheckWinTopLeft(BOARD,row, col, player_number):
+    if (row + 2 >= 6 or col - 2 < 0): return False
+    if (BOARD[row + 2][col] == player_number and BOARD[row + 1][col - 1] == player_number and BOARD[row][
+            col - 2] == player_number): return True
+    return False
+
+def IntraCheckWinTopRight(BOARD,row, col, player_number):
+    if (row - 2 < 0 or col - 2 < 0): return False
+    if (BOARD[row - 2][col] == player_number and BOARD[row - 1][col - 1] == player_number and BOARD[row][
+            col - 2] == player_number): return True
     return False
 
 def main():
