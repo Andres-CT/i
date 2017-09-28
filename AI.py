@@ -258,32 +258,32 @@ def checkAnySquare(BOARD, column, row, playerN):
 
    return false
 
-def checkL1(board,row,col,turn):
-    global board, width, height
+def checkL1(BOARD,row,col,turn):
+    global  width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((board[row][col] and board[row+1][col] and board[row+1][col-1])==turn and board[row][col-1]!=0):
+    if ((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+1][col-1])==turn and BOARD[row][col-1]!=0):
         return True
     return False
 
 
-def checkL2(board,row,col,turn):
-    global board, width, height
+def checkL2(BOARD,row,col,turn):
+    global width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((board[row][col] and board[row+1][col] and board[row+1][col+1])==turn and board[row][col+1]!=0):
+    if ((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+1][col+1])==turn and BOARD[row][col+1]!=0):
         return True
     return False
 
-def checkL3(board, row,col,turn):
-    global board, width, height
+def checkL3(BOARD, row,col,turn):
+    global  width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((board[row][col] and board[row][col+1] and board[row+1][col+1])==turn and board[row+1][col]!=0):
+    if ((BOARD[row][col] and BOARD[row][col+1] and BOARD[row+1][col+1])==turn and BOARD[row+1][col]!=0):
         return True
     return False
 
-def checkL4(board, row,col,turn):
-    global board, width, height
+def checkL4(BOARD, row,col,turn):
+    global width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((board[row][col] and board[row][col-1] and board[row+1][col-1])==turn and board[row+1][col]!=0):
+    if ((BOARD[row][col] and BOARD[row][col-1] and BOARD[row+1][col-1])==turn and BOARD[row+1][col]!=0):
         return True
     return False
 
@@ -320,7 +320,7 @@ def main():
         printGame()
         print ("The winner is ", turn)
 
-    """
+
 
 if __name__ == '__main__':
     main()
