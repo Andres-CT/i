@@ -145,11 +145,11 @@ def intelligentFunction1(turn, board):
                     i=y
                     for r in range(0,height-3):
                         for c in range(0,width-3):
-                            if(board[c][r]==1
-                            and board[c][r+1]==1
-                            and board[c][r+2]==1
-                            and board[c+1][r+1]==0):
-                                i=r+1
+                            if(board[r][c]==turn
+                            and board[r][c+1]==turn
+                            and board[r][c+2]==turn
+                            and board[r+1][c+1]==0):
+                                i=c+1
     else:
         start=1
         for u in range(0,width):
@@ -170,8 +170,14 @@ def intelligentFunction1(turn, board):
                 for y in range(0,width):
                     if(board[x][y]!=turn and board[x][y]!=0 and board[x+1][y]==0):
                         i=y
+                        for r in range(0,height-3):
+                            for c in range(0,width-3):
+                                if(board[r][c]==turn
+                                and board[r][c+1]==turn
+                                and board[r][c+2]==turn
+                                and board[r+1][c+1]==0):
+                                    i=c+1
             if(board[5][i]!=0):
-               print ("QQ")
                i=random.randint(0,6)
                while (board[5][i]!=0):
                    i=random.randint(0,6)
@@ -199,13 +205,15 @@ class ConectaT:
     def __init__(self, intraBoard, depth, turn):
         self.IntraBoard = intraBoard
         self.depth = depth
-        print ("-----------------------------")
+        if(depth==0):
+            turn=1+(turn%2)
+        """print ("-----------------------------")
         for x in range(6-1,-1,-1):
             for y in range(0,7):
                 print ("|",self.IntraBoard[x][y], end=" "),
             print ("|\n----+---+---+---+---+---+----")
-        print ("\n")
-        if(depth<=1):#-1 of desired level
+        print ("\n")"""
+        if(depth<=2):#-1 of desired level
             self.p1 = ConectaT(placeChange(intraBoard, 0, 1+(turn%2)),depth+1,1+(turn%2))
             self.p2 = ConectaT(placeChange(intraBoard, 1, 1+(turn%2)),depth+1,1+(turn%2))
             self.p3 = ConectaT(placeChange(intraBoard, 2, 1+(turn%2)),depth+1,1+(turn%2))
@@ -220,15 +228,16 @@ def main():
     turn = 1
     loser = 0
     while (gameFinished(turn) == 0):
-        #printGame()
+        printGame()
         if (turn == 1):
             turn = 2
         else:
             turn = 1
         if (turn == 1):
-            column = intelligentFunction2(turn, board)
+            column = int(input("Columna para tirar: "))
+            #column = intelligentFunction1(turn, board)
         if (turn == 2):
-            #column =int(input()) 
+            #column = int(input("Columna para tirar: "))
             column = intelligentFunction1(turn, board)
         if (place(column, turn) == -1):
             loser = turn
