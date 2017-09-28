@@ -235,7 +235,7 @@ def Evaluate(BOARD,playerN):
             for y in range(0,width-2):
                 if(board[x][y]==playerN and board[x][y+2]==playerN and board[x][y+1]!=0
                    and board[x+1][y+1]==playerN and
-                   ((board[x+1][y]!=0 and board[x+1][y]==0) 
+                   ((board[x+1][y]!=0 and board[x+1][y]==0)
                    or (board[x+1][y+2]!=0 and board[x+1][y+2]==0))):
                     Score+=100
     return Score
@@ -251,6 +251,13 @@ def MejorTiro(object):
                     ElMejorTiro=(object.Pointers[ii].Pointers[jj].Pointers[hh].CPT)
                     MejorScore=Candidato
     return ElMejorTiro
+
+ def checkAnySquare(BOARD, column, row, playerN):
+
+   if(board[row][colum+1] == player_number and board[row+1][colum] == player_number and board[row+1][colum+1] == player_number):
+        return true
+
+   return false
 
 def main():
     print (MejorTiro(Q))
@@ -280,7 +287,7 @@ def main():
     else:
         printGame()
         print ("The winner is ", turn)
-    
+
     """
 
 if __name__ == '__main__':
