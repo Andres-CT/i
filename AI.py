@@ -137,12 +137,19 @@ def checkWinTopRight(row, col, player_number):
     return False
 
 #ARBOLES#############
-    
+
 def checkAnySquare(BOARD, column, row, playerN):
    if(BOARD[row][column+1] == playerN and BOARD[row+1][column] == playerN and BOARD[row+1][column+1] == playerN):
-       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0): 
+       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0):
            return True
    return False
+
+def checkAnyCone(BOARD, column, row, playerN):
+    if(column=<5):
+      if(BOARD[row+1][column+1]== playerN and BOARD[row][column+2]== playerN):
+          return True
+      return False
+    return False
 
 def checkL1(BOARD,row,col,turn):
     global  width, height
@@ -195,8 +202,8 @@ def checkDiagonales(BOARD, row, col, turn):
     if ((BOARD[row][col] and BOARD[row+1][col-1] and BOARD[row+2][col-2])==turn) and (BOARD[row][col-1]!=0) and (BOARD[row][col-2]!=0)and (BOARD[row+1][col]!=0) and (BOARD[row+1][col-2]!=0):
         return True
     return False
-    
-    
+
+
 
 def IntraCheckAnyT(BOARD, player_number):
     for r in range(0, 6):
@@ -347,7 +354,7 @@ class ConectaT:
             for k in range(0,7):
                 self.Pointers.append(ConectaT(placeChange(intraBoard, k, 1+(turn%2)),depth+1,1+(turn%2),k))
         self.CPT=MejorTiro(self)
-        
+
 def Evaluate(BOARD,playerN):
     Score=3
     if(IntraCheckAnyT(playerN)):
@@ -425,8 +432,8 @@ def main():
     else:
         printGame()
         print ("The winner is ", turn)
-    
-    
+
+
 
 if __name__ == '__main__':
     main()
