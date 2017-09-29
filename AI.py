@@ -145,7 +145,7 @@ def checkAnySquare(BOARD, column, row, playerN):
    return False
 
 def checkAnyCone(BOARD, column, row, playerN):
-    if(column=<5):
+    if(column <= 5):
       if(BOARD[row+1][column+1]== playerN and BOARD[row][column+2]== playerN):
           return True
       return False
