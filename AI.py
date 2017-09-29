@@ -140,7 +140,7 @@ def checkWinTopRight(row, col, player_number):
 
 def checkAnySquare(BOARD, column, row, playerN):
    if(BOARD[row][column+1] == playerN and BOARD[row+1][column] == playerN and BOARD[row+1][column+1] == playerN):
-       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0):
+       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0 or Board[row][column-1]==0 or Board[row][column+2]==0):
            return True
    return False
 
