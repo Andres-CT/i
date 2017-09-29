@@ -147,7 +147,7 @@ def checkAnySquare(BOARD, column, row, playerN):
 def checkL1(BOARD,row,col,turn):
     global  width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+1][col-1])==turn and BOARD[row][col-1]!=0):
+    if ((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+1][col-1])==turn and BOARD[row][col-1]!=0 and BOARD[row][col+1]!=0 and BOARD[row+1][col+1]==0):
         return True
     return False
 
@@ -155,21 +155,21 @@ def checkL1(BOARD,row,col,turn):
 def checkL2(BOARD,row,col,turn):
     global width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+1][col+1])==turn and BOARD[row][col+1]!=0):
+    if ((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+1][col+1])==turn and BOARD[row][col+1]!=0 and BOARD[row][col-1]!=0 and BOARD[row+1][col-1]==0):
         return True
     return False
 
 def checkL3(BOARD, row,col,turn):
     global  width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((BOARD[row][col] and BOARD[row][col+1] and BOARD[row+1][col+1])==turn and BOARD[row+1][col]!=0):
+    if ((BOARD[row][col] and BOARD[row][col+1] and BOARD[row+1][col+1])==turn and BOARD[row+1][col]!=0 and BOARD[row][col+2]==0):
         return True
     return False
 
 def checkL4(BOARD, row,col,turn):
     global width, height
     if (col + 1 == width or row == 0 or row + 1 == width): return False
-    if ((BOARD[row][col] and BOARD[row][col-1] and BOARD[row+1][col-1])==turn and BOARD[row+1][col]!=0):
+    if ((BOARD[row][col] and BOARD[row][col-1] and BOARD[row+1][col-1])==turn and BOARD[row+1][col]!=0and BOARD[row][col-2]==0):
         return True
     return False
 
@@ -186,6 +186,16 @@ def checkVertical(BOARD, row, col, turn):
     if (((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+2][col])==turn) and ((BOARD[row][col-1]!=0) or (BOARD[row][col+1]!=0)) and ((BOARD[row+1][col-1]==0)or (BOARD[row+1][col+1]==0))):
         return True
     return False
+
+def checkDiagonales(BOARD, row, col, turn):
+    global width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if ((BOARD[row][col] and BOARD[row+1][col+1] and BOARD[row+2][col+2])==turn) and (BOARD[row][col+1]!=0) and (BOARD[row][col+2]!=0)and (BOARD[row+1][col]!=0) and (BOARD[row+1][col+2]!=0):
+        return True
+    if ((BOARD[row][col] and BOARD[row+1][col-1] and BOARD[row+2][col-2])==turn) and (BOARD[row][col-1]!=0) and (BOARD[row][col-2]!=0)and (BOARD[row+1][col]!=0) and (BOARD[row+1][col-2]!=0):
+        return True
+    return False
+    
     
 
 def IntraCheckAnyT(BOARD, player_number):
