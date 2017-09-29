@@ -140,7 +140,7 @@ def checkWinTopRight(row, col, player_number):
     
 def checkAnySquare(BOARD, column, row, playerN):
    if(BOARD[row][column+1] == playerN and BOARD[row+1][column] == playerN and BOARD[row+1][column+1] == playerN):
-       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0) 
+       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0): 
            return True
    return False
 
@@ -172,6 +172,21 @@ def checkL4(BOARD, row,col,turn):
     if ((BOARD[row][col] and BOARD[row][col-1] and BOARD[row+1][col-1])==turn and BOARD[row+1][col]!=0):
         return True
     return False
+
+def checkHorizontal(BOARD, row, col, turn):
+    global width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if ((BOARD[row][col] and BOARD[row][col+1] and BOARD[row][col+2])==turn and BOARD[row+1][col+1]!=0):
+        return True
+    return False
+
+def checkVertical(BOARD, row, col, turn):
+    global width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if (((BOARD[row][col] and BOARD[row+1][col] and BOARD[row+2][col])==turn) and ((BOARD[row][col-1]!=0) or (BOARD[row][col+1]!=0)) and ((BOARD[row+1][col-1]==0)or (BOARD[row+1][col+1]==0))):
+        return True
+    return False
+    
 
 def IntraCheckAnyT(BOARD, player_number):
     for r in range(0, 6):
@@ -332,7 +347,7 @@ def Evaluate(BOARD,playerN):
     if(Score!=10000 and Score!=-10000):
         for r in range(0,height-2):
             for c in range(0,width-1):
-                if(checkAnySquare(BOARD,c,r,plyerN))
+                if(checkAnySquare(BOARD,c,r,playerN)):
                     Score+=100
     return Score
 
