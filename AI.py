@@ -195,7 +195,15 @@ def checkDiagonales(BOARD, row, col, turn):
     if ((BOARD[row][col] and BOARD[row+1][col-1] and BOARD[row+2][col-2])==turn) and (BOARD[row][col-1]!=0) and (BOARD[row][col-2]!=0)and (BOARD[row+1][col]!=0) and (BOARD[row+1][col-2]!=0):
         return True
     return False
-    
+
+def checkZetas(BOARD, row, col, turn):
+    global width, height
+    if (col + 1 == width or row == 0 or row + 1 == width): return False
+    if (((BOARD[row][col] and BOARD[row][col+1] and BOARD[row+1][col+1] and BOARD[row+1][col+2]) ==turn) and (BOARD[row][col+2]!=0) and ((BOARD[row+1][col]==0) or (BOARD[row+2][col+1]==0))):
+        return True
+    if (((BOARD[row][col] and BOARD[row][col-1] and BOARD[row+1][col-1] and BOARD[row+1][col-2]) ==turn) and (BOARD[row][col-2]!=0) and ((BOARD[row+1][col]==0) or (BOARD[row+2][col-1]==0))):
+        return True
+    return False
     
 
 def IntraCheckAnyT(BOARD, player_number):
