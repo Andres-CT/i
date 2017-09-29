@@ -140,7 +140,8 @@ def checkWinTopRight(row, col, player_number):
     
 def checkAnySquare(BOARD, column, row, playerN):
    if(BOARD[row][column+1] == playerN and BOARD[row+1][column] == playerN and BOARD[row+1][column+1] == playerN):
-        return True
+       if(BOARD[row+2][column]==0 or BOARD[row+2][column+1]==0) 
+           return True
    return False
 
 def checkL1(BOARD,row,col,turn):
@@ -329,26 +330,40 @@ def Evaluate(BOARD,playerN):
     if(IntraCheckAnyT(1+(playerN%2))):
         Score=-10000
     if(Score!=10000 and Score!=-10000):
-        Score=0
+        for r in range(0,height-2):
+            for c in range(0,width-1):
+                if(checkAnySquare(BOARD,c,r,plyerN))
+                    Score+=100
     return Score
 
 def MejorTiro(object):
     MejorScore=0
     Candidato=0
     ElMejorTiro=0
+    NoTirar=[]
+    Fail=0
     for ii in range(0,7):
         if(Evaluate(object.Pointers[ii].IntraBoard,object.Pointers[ii].Turn)==10000):
             ElMejorTiro=object.Pointers[ii].CPT
             MejorScore=10000
             break
+    for ii in range(0,7):
+        for jj in range(0,7):
+            if(Evaluate(object.Pointers[ii].Pointers[jj].IntraBoard,object.Pointers[ii].Pointers[jj].Turn)==10000):
+                NoTirar.append(object.Pointers[ii].Pointers[jj].CPT)
     if(MejorScore!=10000):
         for ii in range(0,7):
-            for jj in range(0,7):
-                for hh in range(0,7):
-                    Candidato=(Evaluate(object.Pointers[ii].Pointers[jj].Pointers[hh].IntraBoard,object.Pointers[ii].Pointers[jj].Pointers[hh].Turn))
-                    if(Candidato>MejorScore):
-                        ElMejorTiro=(object.Pointers[ii].Pointers[jj].Pointers[hh].CPT)
-                        MejorScore=Candidato
+            for NOUSES in range(0,len(NoTirar)):
+                if(ii==NoTirar[NOUSES]):
+                    Fail=1
+                    break
+                if(Fail==0):
+                    for jj in range(0,7):
+                        for hh in range(0,7):
+                            Candidato=(Evaluate(object.Pointers[ii].Pointers[jj].Pointers[hh].IntraBoard,object.Pointers[ii].Pointers[jj].Pointers[hh].Turn))
+                            if(Candidato>MejorScore):
+                                ElMejorTiro=(object.Pointers[ii].Pointers[jj].Pointers[hh].CPT)
+                                MejorScore=Candidato
     return ElMejorTiro
 
 
